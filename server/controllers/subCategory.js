@@ -1,14 +1,13 @@
-const subCategory = require('../models/subCategory');
+const SubCategory = require('../models/subCategory');
 const slugify = require('slugify');
 
 exports.create = async (req, res) => {
     try {
-        const { name } = req.body;
-        const category = await new SubCategory({ name: name, slug: slugify(name).toLowerCase() }).save();
-        res.json(category);
+        const { name, parent } = req.body;
+        res.json(await new SubCategory({ name, parent, slug: slugify(name) }).save());
 
     } catch (err) {
-        console.log(err); 
+        console.log("SUB CREATE ERROR -----> ", err); 
         res.status(400).send('Create sub-category failed');
     }
 };
@@ -36,7 +35,7 @@ exports.update = async (req, res) => {
         res.status(400).send('SubCategory update failed');
     }
 };
-
+ 
 exports.remove = async (req, res) => {
     try {
         const deleted = await SubCategory.findOneAndDelete({ slug: req.params.slug });
