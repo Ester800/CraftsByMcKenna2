@@ -36,7 +36,7 @@ exports.update = async (req, res) => {
         res.status(400).send('Category sub failed');
     }
 };
-
+ 
 exports.remove = async (req, res) => {
     try {
         const deleted = await Sub.findOneAndDelete({ slug: req.params.slug });
