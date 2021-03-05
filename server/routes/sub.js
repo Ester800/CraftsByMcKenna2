@@ -11,18 +11,18 @@ const {
     update, 
     remove, 
     list 
-} = require('../controllers/subCategory');
+} = require('../controllers/sub');
 
 // const myMiddleware = (req, res, next) => {
 //     console.log('IM A MIDDLEWARE YAY!');
 //     next()
 // }
 
-router.post('/subCategory', authCheck, adminCheck, create);
-router.get('/subCategories', list);
-router.get('/subCategory/:slug', read);
-router.put('/subCategory/:slug', authCheck, adminCheck, update);
-router.delete('/subCategory/:slug', authCheck, adminCheck, remove);
+router.post('/sub', authCheck, adminCheck, create);
+router.get('/subs', list);
+router.get('/sub/:slug', read);
+router.put('/sub/:slug', authCheck, adminCheck, update);
+router.delete('/sub/:slug', authCheck, adminCheck, remove);
 
 // router.get('/testing', myMiddleware, (req, res) => {
 //     res.json({
