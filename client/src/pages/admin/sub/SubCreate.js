@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { getCategories } from '../../../functions/category';
-import { createSubCategory, getSubCategories, removeSubCategory } from '../../../functions/subCategory';
+import { createCategory, getCategories, removeCategory } from '../../../functions/category';
+import { createSub, getSub, removeSub, getSubs } from '../../../functions/sub';
 import { Link } from 'react-router-dom';
-import EditOutLined from '@ant-design/icons';
+import { EditOutLined } from '@ant-design/icons';
 import DeleteOutLined from '@ant-design/icons';
 import CategoryForm from '../../../components/forms/CategoryForm';
 import LocalSearch from '../../../components/forms/LocalSearch';
@@ -14,13 +14,14 @@ import { Menu } from 'antd';
 
 const { SubMenu, Item } = Menu;
 
-const SubCategoryCreate = ({ history }) => {
+const SubCreate = ({ history }) => {
     const { user } = useSelector((state) => ({ ...state }));
     
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
-    const [categories, setCategories] = useState([]);  // list of categories that are displayed in the select option
-    const [category, setCategory] = useState('');  // this is the category the user has clicked
+    const [categories, setCategories] = useState([]); // this is the list of categories we show in the options!
+    const [category, setCategory] = useState([]); // this is the category that the user has selected!
+    const [subs, setSubs] = useState([]);
 
     // searching/filtering
     // step 1 - add in the state
@@ -28,20 +29,23 @@ const SubCategoryCreate = ({ history }) => {
 
     useEffect(() => {
         loadCategories();
+        loadSubs();
     }, []);
 
     const loadCategories = () => getCategories().then(c => setCategories(c.data));
+    const loadSubs = () => getSubs().then(s => setSubs(s.data));
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(name);
         setLoading(true);
-        createSubCategory({ name, parent: category }, user.token)
+        createSub({ name, parent: category }, user.token)
         .then(res => {
             console.log(res);
             setLoading(false);
             setName('');
             toast.success(`'${res.data.name}' is created`);
+            loadSubs();
         })
         .catch(err => {
             console.log(err)
@@ -56,10 +60,11 @@ const SubCategoryCreate = ({ history }) => {
         // console.log(answer, slug);
         if(window.confirm('Delete Category?')) {
             setLoading(true);
-            removeSubCategory(slug, user.token)
+            removeSub(slug, user.token)
             .then(res => {
                 setLoading(false);
                 toast.error(`${res.data.name} deleted`);
+                loadSubs();
             })
             .catch(err => {
                 if(err.response.status === 400) {
@@ -69,8 +74,6 @@ const SubCategoryCreate = ({ history }) => {
             });
         }
     };
-
-    
 
     // step 4 - 
     const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
@@ -91,51 +94,47 @@ return (
                     <div className="form-group">
                         <label>Parent Category</label>
                         <select 
-                        name="category" 
-                        className="form-control" 
-                        onChange={e => setCategory(e.target.value)}
+                            name="category" 
+                            className="form-control" 
+                            onChange={e => setCategory(e.target.value)}
                         >
-                            <option>select a Categoy</option>
+                            <option>Please Select an Option</option>
                             {categories.length > 0 && 
-                            categories.map((c) => (
+                                categories.map((c) => (
                                 <option key={c._id} value={c._id}>
-                                    {c.name}
+                                    { c.name }
                                 </option>
-                                ))} 
+                                ))}
                         </select>
-
                     </div>
-
-                    {/* {JSON.stringify(category)} */}
                     
-                        <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
+                    <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
 
-                        <LocalSearch keyword={keyword} setKeyword={setKeyword}/>
-                        {/* - Step 2 */}
-                        {/* create input field where users can type their search query */}
+                    <LocalSearch keyword={keyword} setKeyword={setKeyword}/>
+                    {/* - Step 2 */}
+                    {/* create input field where users can type their search query */}
                         
-
                     <hr />
-                    {/* step 5 - insert the search function into the mapping of the categories
-                    {categories.filter(searched(keyword)).map((c) => (
-                    <div className="alert alert-secondary" key={c._id}>
-                        {c.name}
+                    {/* step 5 - insert the search function into the mapping of the categories */}
+                    {subs.filter(searched(keyword)).map((s) => (
+                    <div className="alert alert-secondary" key={s._id}>
+                        {s.name}
                         
-                        <span onClick={() => handleRemove(c.slug) } className="btn btn-sm float-right">
+                        <span onClick={() => handleRemove(s.slug) } className="btn btn-sm float-right">
                             delete
                         </span>
                         
-                        <Link to={`/admin/category/${c.slug}`}> 
+                        <Link to={`/admin/sub/${s.slug}`}> 
                         <span className="btn btn-sm float-right">
                             edit
                         </span>
                         </Link>
                     </div>
-                    ))} */}
+                    ))}
                 </div>
             </div>
         </div>
     );
 };
 
-export default SubCategoryCreate;
+export default SubCreate;
