@@ -4,14 +4,14 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createCategory, getCategories, removeCategory } from '../../../functions/category';
 import { Link } from 'react-router-dom';
-import EditOutLined from '@ant-design/icons';
-import DeleteOutLined from '@ant-design/icons';
+//import EditOutLined from '@ant-design/icons';  // not sure why this isn't working!
+//import DeleteOutLined from '@ant-design/icons';  // not sure why this isn't working!
 import CategoryForm from '../../../components/forms/CategoryForm';
 import LocalSearch from '../../../components/forms/LocalSearch';
-import { Menu } from 'antd';
+// import { Menu } from 'antd'; // not sure why this isn't working!
 
 
-const { SubMenu, Item } = Menu;
+//const { SubMenu, Item } = Menu;  // possibly need to make anticons work!?
 
 const CategoryCreate = ({ history }) => {
     const { user } = useSelector((state) => ({ ...state }));
