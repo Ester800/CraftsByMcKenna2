@@ -28,7 +28,8 @@ const CategoryCreate = ({ history }) => {
         loadCategories();
     }, []);
 
-    const loadCategories = () => getCategories().then(c => setCategories(c.data));
+    const loadCategories = () => 
+        getCategories().then(c => setCategories(c.data));
 
     const handleSubmit = (e) => {
         e.preventDefault();
