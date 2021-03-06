@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createProduct } from '../../../functions/product';
 import ProductCreateForm from '../../../components/forms/ProductCreateForm';
+import { getCategories, getCategorySubs } from '../../../functions/category';
 
 const initialState = {
     title: 'The Letter A',
@@ -24,9 +25,18 @@ const initialState = {
 
 const ProductCreate = () => {
 const [values, setValues] = useState(initialState);
+const [subOptions, setSubOptions] = useState([]);
+const [showSub, setShowSub] = useState(false);
 
     //redux
     const{ user } = useSelector((state) => ({ ...state }));
+
+    useEffect(() => {
+        loadCategories();
+    }, []);
+
+    const loadCategories = () => 
+        getCategories().then(c => setValues({ ...values, categories: c.data }));
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -48,6 +58,19 @@ const [values, setValues] = useState(initialState);
         //console.log(e.target.name, '-----', e.target.value);
     }
 
+    const handleCategoryChange = (e) => {
+        e.preventDefault();
+        console.log('CLICKED CATEGORY', e.target.value);
+        setValues({ ...values, subs: [], category: e.target.value});
+        getCategorySubs(e.target.value)
+        .then(res => {
+            console.log('SUB OPTIONS ON CATEGORY CLICK', res);
+            setSubOptions(res.data);
+        });
+        setShowSub(true);
+
+    };
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -57,12 +80,16 @@ const [values, setValues] = useState(initialState);
 
                 <div className="col-md-10">
                     <h4>Product Create</h4>
-                    <hr/>
-                    
+                    <br/>
+
                     <ProductCreateForm 
                     handleSubmit={handleSubmit} 
                     handleChange={handleChange} 
+                    setValues={setValues}
                     values={values}
+                    handleCategoryChange={handleCategoryChange}
+                    subOptions={subOptions}
+                    showSub={showSub}
                     />
                     
                 </div>
