@@ -34,7 +34,7 @@ const ProductCreateForm = ({
     return (
         <form onSubmit={ handleSubmit }>
                         <div className="form-group">
-                            <label>Title</label>
+                            <label><u>Title</u></label>
                             <input 
                                 type="text" 
                                 name="title" 
@@ -45,7 +45,7 @@ const ProductCreateForm = ({
                         </div>
 
                         <div className="form-group">
-                            <label>Description</label>
+                            <label><u>Description</u></label>
                             <input 
                                 type="text" 
                                 name="description" 
@@ -56,7 +56,7 @@ const ProductCreateForm = ({
                         </div>
 
                         <div className="form-group">
-                            <label>Price</label>
+                            <label><u>Price</u></label>
                             <input 
                                 type="number" 
                                 name="price" 
@@ -67,7 +67,7 @@ const ProductCreateForm = ({
                         </div>
 
                         <div className="form-group">
-                            <label>Shipping</label>
+                            <label><u>Shipping</u></label>
                             <select name="shipping" className="form-control" onChange={handleChange}>
                                 <option>Shipping?</option>
                                 <option value="No">No</option>
@@ -76,7 +76,7 @@ const ProductCreateForm = ({
                         </div>
 
                         <div className="form-group">
-                            <label>Quantity</label>
+                            <label><u>Quantity</u></label>
                             <input 
                                 type="number" 
                                 name="quantity" 
@@ -87,7 +87,7 @@ const ProductCreateForm = ({
                         </div>
 
                         <div className="form-group">
-                            <label>Color</label>
+                            <label><u>Color</u></label>
                             <select name="color" className="form-control" onChange={handleChange}>
                                 <option>Select one</option>
                                 {colors.map((c) => (
@@ -99,7 +99,7 @@ const ProductCreateForm = ({
                         </div>
 
                         <div className="form-group">
-                            <label>Brand</label>
+                            <label><u>Brand</u></label>
                             <select name="brand" className="form-control" onChange={handleChange}>
                                 <option>Select one</option>
                                 {brands.map((b) => (
@@ -111,7 +111,7 @@ const ProductCreateForm = ({
                         </div>
 
                         <div className="form-group">
-                        <label>Parent Category</label>
+                        <label><u>Parent Category</u></label>
                         <select 
                             name="category" 
                             className="form-control" 
@@ -128,7 +128,7 @@ const ProductCreateForm = ({
                     </div>
                     
                     {showSub && <div>
-                        <label>Sub Categories</label>
+                        <label><u>Sub Categories</u></label>
                         <Select
                             mode="multiple"
                             style={{width: '100%'}}
