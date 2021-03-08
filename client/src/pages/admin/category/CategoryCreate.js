@@ -11,7 +11,7 @@ import LocalSearch from '../../../components/forms/LocalSearch';
 // import { Menu } from 'antd'; // not sure why this isn't working!
 
 
-//const { SubMenu, Item } = Menu;  // possibly need to make anticons work!?
+//const { SubMenu, Item } = Menu;  // possibly need to make ant icons work!?
 
 const CategoryCreate = ({ history }) => {
     const { user } = useSelector((state) => ({ ...state }));
