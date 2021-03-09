@@ -5,14 +5,10 @@ import { useSelector } from 'react-redux';
 import { createCategory, getCategories, removeCategory } from '../../../functions/category';
 import { createSub, getSub, removeSub, getSubs } from '../../../functions/sub';
 import { Link } from 'react-router-dom';
-import { EditOutLined } from '@ant-design/icons';
-import DeleteOutLined from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 import CategoryForm from '../../../components/forms/CategoryForm';
 import LocalSearch from '../../../components/forms/LocalSearch';
-import { Menu } from 'antd';
-
-
-const { SubMenu, Item } = Menu;
 
 const SubCreate = ({ history }) => {
     const { user } = useSelector((state) => ({ ...state }));
@@ -121,12 +117,12 @@ return (
                         {s.name}
                         
                         <span onClick={() => handleRemove(s.slug) } className="btn btn-sm float-right">
-                            delete
+                            <DeleteOutlined className="text-warning" />
                         </span>
                         
                         <Link to={`/admin/sub/${s.slug}`}> 
                         <span className="btn btn-sm float-right">
-                            edit
+                            <EditOutlined />
                         </span>
                         </Link>
                     </div>

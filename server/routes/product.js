@@ -5,7 +5,7 @@ const router = express.Router();
 const { authCheck, adminCheck } = require('../middlewares/auth');
 
 // controller
-const { create, listAll } = require('../controllers/product');
+const { create, listAll, remove } = require('../controllers/product');
 
 // const myMiddleware = (req, res, next) => {
 //     console.log('IM A MIDDLEWARE YAY!');
@@ -14,6 +14,7 @@ const { create, listAll } = require('../controllers/product');
 
 router.post('/product', authCheck, adminCheck, create);
 router.get('/products/:count', listAll);
+router.delete('/product/:slug', authCheck, adminCheck, remove);
 
 // router.get('/testing', myMiddleware, (req, res) => {
 //     res.json({

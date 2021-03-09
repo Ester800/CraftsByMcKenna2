@@ -48,6 +48,7 @@ const [loading, setLoading] = useState(false);
             //console.log(res);
             window.alert(`"${res.data.title}" has been created`);
             window.location.reload();  // reloads the page with empty fields!
+            
         })
         .catch(err => {
             console.log(err);
