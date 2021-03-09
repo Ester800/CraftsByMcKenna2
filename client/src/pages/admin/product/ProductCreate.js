@@ -87,7 +87,7 @@ const [loading, setLoading] = useState(false);
                     <hr />
 
                     {/* {JSON.stringify(values.images)}                     */}
-                    
+                    {/* the above gives us a glimpse of the data so we can confirm we've captured what we need! */}
 
                     <div className="p-3">
                         <FileUpload 
