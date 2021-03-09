@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from 'antd';
 import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
 import  { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
@@ -20,7 +21,9 @@ const AdminProductCard = ({ product, handleRemove }) => {
             />
         }
         actions={[
-            <EditOutlined />, 
+            <Link to={`/admin/product/${slug}`}>
+                <EditOutlined />
+            </Link>, 
             <DeleteOutlined onClick={() => handleRemove(slug)}  // arrow function otherwise it gets called immediately
                             className="text-danger" 
             />
