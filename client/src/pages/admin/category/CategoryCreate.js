@@ -4,14 +4,10 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createCategory, getCategories, removeCategory } from '../../../functions/category';
 import { Link } from 'react-router-dom';
-//import EditOutLined from '@ant-design/icons';  // not sure why this isn't working!
-//import DeleteOutLined from '@ant-design/icons';  // not sure why this isn't working!
+import { EditOutlined } from '@ant-design/icons';  
+import { DeleteOutlined } from '@ant-design/icons';  
 import CategoryForm from '../../../components/forms/CategoryForm';
 import LocalSearch from '../../../components/forms/LocalSearch';
-// import { Menu } from 'antd'; // not sure why this isn't working!
-
-
-//const { SubMenu, Item } = Menu;  // possibly need to make ant icons work!?
 
 const CategoryCreate = ({ history }) => {
     const { user } = useSelector((state) => ({ ...state }));
@@ -103,12 +99,12 @@ return (
                         {c.name}
                         
                         <span onClick={() => handleRemove(c.slug) } className="btn btn-sm float-right">
-                            delete
+                            <DeleteOutlined className="text-danger" />
                         </span>
                         
                         <Link to={`/admin/category/${c.slug}`}> 
                         <span className="btn btn-sm float-right">
-                            edit
+                            <EditOutlined />
                         </span>
                         </Link>
                     </div>
