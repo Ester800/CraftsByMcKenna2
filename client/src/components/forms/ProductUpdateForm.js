@@ -9,6 +9,12 @@ const ProductUpdateForm = ({
     handleChange, 
     setValues,
     values, 
+    handleCategoryChange,
+    categories,
+    subOptions,
+    arrayOfSubs,
+    setArrayOfSubs,
+    selectedCategory,
     }) => {
 
     //destructure
@@ -16,7 +22,6 @@ const ProductUpdateForm = ({
         title, 
         description, 
         price, 
-        categories, 
         category, 
         subs, 
         shipping, 
@@ -116,15 +121,15 @@ const ProductUpdateForm = ({
                                 ))}
                             </select>
                         </div>
-
-                        {/* <div className="form-group">
+                        
+                        <div className="form-group">
                         <label><u>Parent Category</u></label>
                         <select 
                             name="category" 
                             className="form-control" 
                             onChange={handleCategoryChange}
+                            value={selectedCategory ? selectedCategory : category._id}
                         >
-                            <option>Please Select an Option</option>
                             {categories.length > 0 && 
                                 categories.map((c) => (
                                 <option key={c._id} value={c._id}>
@@ -133,15 +138,15 @@ const ProductUpdateForm = ({
                                 ))}
                         </select>
                     </div>
-                    
-                    {showSub && <div>
+
+                    <div>
                         <label><u>Sub Categories</u></label>
                         <Select
                             mode="multiple"
                             style={{width: '100%'}}
                             placeholder="Please Select"
-                            value={subs}
-                            onChange={(value) => setValues({ ...values, subs: value })}
+                            value={arrayOfSubs}
+                            onChange={(value) => setArrayOfSubs(value)}
                         >
                             {subOptions.length && 
                                 subOptions.map((s) => (
@@ -150,7 +155,7 @@ const ProductUpdateForm = ({
                                     </Option>
                             ))}
                         </Select>
-                    </div>} */}
+                    </div>
 
                     <br />
                         <button className="bt btn-outline-info">Save</button>
