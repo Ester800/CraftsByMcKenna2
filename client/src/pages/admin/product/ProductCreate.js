@@ -72,7 +72,6 @@ const [loading, setLoading] = useState(false);
             setSubOptions(res.data);
         });
         setShowSub(true);
-
     };
 
     return (
