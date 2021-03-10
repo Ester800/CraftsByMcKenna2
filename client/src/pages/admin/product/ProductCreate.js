@@ -25,7 +25,7 @@ const initialState = {
 }
 
 
-const ProductCreate = () => {
+const ProductCreate = ({history}) => {
 const [values, setValues] = useState(initialState);
 const [subOptions, setSubOptions] = useState([]);
 const [showSub, setShowSub] = useState(false);
@@ -55,6 +55,7 @@ const [loading, setLoading] = useState(false);
             //if (err.response.status === 400) toast.error(err.response.data);
             toast.error(err.response.data.err);
         });
+        history.push('/admin/products');
     };
 
     const handleChange = (e) => {
