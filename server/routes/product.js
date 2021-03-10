@@ -10,7 +10,8 @@ const {
     listAll, 
     remove, 
     read, 
-    update 
+    update, 
+    list 
     } = require('../controllers/product');
 
 // const myMiddleware = (req, res, next) => {
@@ -23,6 +24,7 @@ router.get('/products/:count', listAll);
 router.delete('/product/:slug', authCheck, adminCheck, remove);
 router.get('/product/:slug', read);
 router.put('/product/:slug', authCheck, adminCheck, update);
+router.post('/products', list);
 
 // router.get('/testing', myMiddleware, (req, res) => {
 //     res.json({
