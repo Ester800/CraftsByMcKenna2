@@ -65,19 +65,51 @@ exports.update = async (req, res) => {
     }
 };
 
+
+// WITHOUT PAGINATION!
+// exports.list = async (req, res) => {
+//     try {
+//         // createdAt/updatedAt, descending/ascending, 3
+//         const { sort, order, limit } = req.body;
+//         const products = await Product.find({ })
+//         .populate('category')
+//         .populate('subs')
+//         .sort([[sort, order]])
+//         .limit(limit)
+//         .exec();
+
+//         res.json(products);
+//     } catch (err) {
+//         console.log(err)
+//     }
+// }
+
+
+// WITH PAGINATION!
 exports.list = async (req, res) => {
+    // console.log(req.body);
     try {
         // createdAt/updatedAt, descending/ascending, 3
-        const { sort, order, limit } = req.body;
+        const { sort, order, page } = req.body;
+        const currentPage = page || 1;  // if there are no pages to show, set at one!
+        const perPage = 3; // displays only a set number of items per page
+
+
         const products = await Product.find({ })
+        .skip((currentPage - 1) * perPage)
         .populate('category')
         .populate('subs')
         .sort([[sort, order]])
-        .limit(limit)
+        .limit(perPage)
         .exec();
 
         res.json(products);
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 }
+
+exports.productsCount = async (req, res) => {
+    let total = await Product.find({}).estimatedDocumentCount().exec();  // estDocCt is mongoose based function
+    res.json(total);
+};
