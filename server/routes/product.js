@@ -12,7 +12,8 @@ const {
     read, 
     update, 
     list, 
-    productsCount
+    productsCount,
+    productStar
     } = require('../controllers/product');
 
 // const myMiddleware = (req, res, next) => {
@@ -27,6 +28,9 @@ router.delete('/product/:slug', authCheck, adminCheck, remove);
 router.get('/product/:slug', read);
 router.put('/product/:slug', authCheck, adminCheck, update);
 router.post('/products', list);
+
+// rating
+router.put('/product/star/:productId', authCheck, productStar)
 
 
 // router.get('/testing', myMiddleware, (req, res) => {
