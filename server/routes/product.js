@@ -13,7 +13,8 @@ const {
     update, 
     list, 
     productsCount,
-    productStar
+    productStar, 
+    listRelated,
     } = require('../controllers/product');
 
 // const myMiddleware = (req, res, next) => {
@@ -30,7 +31,10 @@ router.put('/product/:slug', authCheck, adminCheck, update);
 router.post('/products', list);
 
 // rating
-router.put('/product/star/:productId', authCheck, productStar)
+router.put('/product/star/:productId', authCheck, productStar);
+
+// related
+router.get('/product/related/:productId', listRelated);
 
 
 // router.get('/testing', myMiddleware, (req, res) => {
