@@ -15,18 +15,31 @@ const Login = ({ history }) => {
     const { user } = useSelector((state) => ({ ...state }));
 
     useEffect(() => {
-      if(user && user.token) history.push('/');
-  }, [history, user]);
+      let intended = history.location.state;
+      if(intended) {
+        return;
+      } else {
+        if(user && user.token) history.push('/');
+      }
+    }, [user, history]);
 
     let dispatch = useDispatch();
 
     const roleBasedRedirect = (res) => {
-      if(res.data.role === 'admin') {
-        history.push('/admin/dashboard');
-      } else {
-        history.push('/');
+
+      // check if intended
+      let intended = history.location.state;
+
+      if(intended) {
+        history.push(intended.from);
+      } else { 
+        if(res.data.role === 'admin') {
+          history.push('/admin/dashboard');
+        } else {
+          history.push('/');
+        }
       }
-    }
+    };
 
     const handleSubmit = async (e) => {
       e.preventDefault();  // prevents the browser from reloading (which it does by default)

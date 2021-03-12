@@ -8,16 +8,17 @@ import stockPhoto from '../../images/craftsbymckennalogo.jpg';
 import ProductListItems from './ProductListItems';
 import StarRating from 'react-star-ratings';
 import RatingModal from '../modal/RatingModal';
+import { showAverage } from '../../functions/rating';
 
 
 const { TabPane } = Tabs;
 
-const SingleProduct = ({ product }) => {
+// this is the child component of Product page
+const SingleProduct = ({ product, onStarClick, star }) => {
     const { title, images, description, _id } = product;
 
     return (
         <>
-        
             <div className="col-md-7">
                 { images && images.length ? (
                 <Carousel showArrows={true} autoPlay infiniteLoop>
@@ -40,7 +41,11 @@ const SingleProduct = ({ product }) => {
             <div className="col-md-5">
             <h1 className="bg-info p-3 text-center">{title}</h1>
 
-                
+            {product && product.ratings && product.ratings.length > 0 ? (
+                showAverage(product)
+                ) : (
+                <div className="text-center pt-1 pb-3">No rating yet</div>
+                )}
 
                 <Card
                 actions=
@@ -55,10 +60,8 @@ const SingleProduct = ({ product }) => {
                             <StarRating 
                                 name={_id}
                                 numberOfStars={5}
-                                rating={2}
-                                changeRating={(newRating, name) => 
-                                    console.log('newRating', newRating, 'name', name)
-                                }
+                                rating={star}
+                                changeRating={onStarClick}
                                 isSelectable={true}
                                 starRatedColor='red'
                             />

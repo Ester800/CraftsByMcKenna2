@@ -3,6 +3,7 @@ import { Card } from 'antd';
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
 import { Link } from 'react-router-dom';
+import { showAverage } from '../../functions/rating';
 
 const { Meta } = Card;
 
@@ -11,7 +12,14 @@ const ProductCard = ({product}) => {
     const { images, title, description, slug } = product;
 
 return (
-    
+    <>
+        {product && product.ratings && product.ratings.length > 0 ? (
+            showAverage(product)
+        ) : (
+        <div className="text-center pt-1 pb-3">No rating yet</div>
+        )}
+
+
     <Card
     cover={
         <img 
@@ -33,6 +41,7 @@ return (
     >
       <Meta title={title} description={`${description && description.substring(0, 45)}...`} />  
     </Card>
+    </>
     );
 };
 
