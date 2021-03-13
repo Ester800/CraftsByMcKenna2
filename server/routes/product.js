@@ -15,6 +15,7 @@ const {
     productsCount,
     productStar, 
     listRelated,
+    searchFilters,
     } = require('../controllers/product');
 
 // const myMiddleware = (req, res, next) => {
@@ -35,6 +36,9 @@ router.put('/product/star/:productId', authCheck, productStar);
 
 // related
 router.get('/product/related/:productId', listRelated);
+
+// search  -one endpoint that is flexible to handle any search: price, brand, text, star rating etc...
+router.post('/search/filters', searchFilters);
 
 
 // router.get('/testing', myMiddleware, (req, res) => {
