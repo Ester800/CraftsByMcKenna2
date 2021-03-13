@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home';
@@ -26,6 +25,7 @@ import ProductUpdate from './pages/admin/product/ProductUpdate';
 import Product from './pages/Product';
 import CategoryHome from './pages/category/CategoryHome';
 import SubHome from './pages/sub/SubHome';
+import Shop from './pages/Shop';
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
@@ -87,6 +87,7 @@ useEffect(() => {
         <Route exact path="/product/:slug" component={Product} />
         <Route exact path="/category/:slug" component={CategoryHome} />
         <Route exact path="/sub/:slug" component={SubHome} />
+        <Route exact path="/shop" component={Shop} />
       </Switch>
     </>
   );
