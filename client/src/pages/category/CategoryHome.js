@@ -19,7 +19,7 @@ const CategoryHome = ({ match }) => {
             setLoading(false);
         });
 
-    }, []);
+    }, [slug]);
 
     return (
         <div className="container">

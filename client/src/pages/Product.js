@@ -18,7 +18,7 @@ const Product = ({ match }) => {
 
     useEffect(() => {
         loadSingleProduct();
-    }, [slug]);
+    }, []);
 
     useEffect(() => {
         if(product.ratings && user) {
