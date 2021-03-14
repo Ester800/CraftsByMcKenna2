@@ -8,7 +8,7 @@ import { DollarOutlined, DownSquareOutlined, StarOutlined } from '@ant-design/ic
 import Star from '../components/forms/Star';
 
 
-const { SubMenu, ItemGroup } = Menu; 
+const { SubMenu } = Menu; 
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -33,7 +33,7 @@ const Shop = () => {
         fetchProductsByfilter(arg).then((res) => {
             setProducts(res.data);
         });
-    }
+    };
 
     // 1.  load products by default on page load
     const loadAllProducts = () => {
@@ -47,8 +47,11 @@ const Shop = () => {
     useEffect(() => {
         //console.log('load products based on user search input', text)
         const delayed = setTimeout(() => {
+            setPrice([0, 0]);
+            setCategoryIds([]);
+            setStar('');
             fetchProducts({ query: text});
-        }, 300)  // here we delay the req to give the user time to finalize their decision, thereby limiting the number of requests we send to the back end
+        }, 300);  // here we delay the req to give the user time to finalize their decision, thereby limiting the number of requests we send to the back end
         return () => clearTimeout(delayed);
     }, [text]);
 
@@ -75,23 +78,24 @@ const Shop = () => {
 
     // 4. load products based on category!
     // show categories in a list of checkboxes
-    const showCategories = () => categories.map((c) => (
-        <div key={c._id}>
-            <Checkbox 
-            onChange={handleCheck} 
-            className="pt-2 pb-2 pl-4 pr-4" 
-            value={c._id} 
-            name="category"
-            //checked={categoryIds.includes(c._id)}
-            >
-                {c.name}
-            </Checkbox>
-            <br />
-        </div>
+    const showCategories = () => 
+        categories.map((c) => (
+            <div key={c._id}>
+                <Checkbox 
+                onChange={handleCheck} 
+                className="pt-2 pb-2 pl-4 pr-4" 
+                value={c._id} 
+                name="category"
+                checked={categoryIds.includes(c._id)}
+                >
+                    {c.name}
+                </Checkbox>
+                <br />
+            </div>
     ));
 
     // handleCheck for categories
-    const handleCheck = e => {
+    const handleCheck = (e) => {
         dispatch({
             type: 'SEARCH_QUERY',
             payload: { text: ''},
@@ -132,7 +136,6 @@ const Shop = () => {
     };
 
     const showStars = () => (
-        <>
         <div className='pr-4 pl-4 pr-4 pt-2'>
             <Star starClick={handleStarClick} numberOfStars = {5} /><br/>
             <Star starClick={handleStarClick} numberOfStars = {4} /><br/>
@@ -140,7 +143,7 @@ const Shop = () => {
             <Star starClick={handleStarClick} numberOfStars = {2} /><br/>
             <Star starClick={handleStarClick} numberOfStars = {1} /><br/>
         </div>
-        </>
+        
     );
 
 
@@ -151,14 +154,14 @@ const Shop = () => {
                     <h4>Search/filter</h4>
                     <hr />
 
-                    <Menu defaultOpenKeys={['1', '2', '3']} mode="inline">
+                    <Menu defaultOpenKeys={['1', '2', '3', '4', '5']} mode="inline">
 
                         {/* Price */}
                         <SubMenu 
                             key='1' 
                             title={
                                 <span classname="h6">
-                                    <DollarOutlined /> price
+                                    <DollarOutlined /> Price
                                 </span>
                             }
                         >
@@ -169,7 +172,7 @@ const Shop = () => {
                                     range 
                                     value={price} 
                                     onChange={handleSlider} 
-                                    max='500'
+                                    max='499'
                                 />
                             </div>
                         </SubMenu>
