@@ -177,13 +177,57 @@ const handleQuery = async (req, res, query) => {
     res.json(products);
 };
 
+const handlePrice = async (req, res, price) => {
+    try{
+        let products = await Product.find({
+            price: {
+                $gte: price[0],   // $gte is GreaterThan from mongoose
+                $lte: price[1],   // $lte is LessThan from mongoose
+            }
+        })
+        .populate('category', '_id name')
+        .populate('subs', '_id name')
+        .populate('postedBy', '_id name')
+        .exec();
+
+        res.json(products);
+    } catch (err) {
+        console.log(err);
+    }   
+};
+
+const handleCategory = async(req, res, category) => {
+    try {
+        let products = await Product.find({ category })
+        .populate('category', '_id name')
+        .populate('subs', '_id name')
+        .populate('postedBy', '_id name')
+        .exec();
+
+        res.json(products);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 // SEARCH / filters
 exports.searchFilters = async (req, res) => {
-    const { query } = req.body;
+    const { query, price, category } = req.body;
 
     if(query) {
         console.log('query', query);
         await handleQuery(req, res, query);
+    }
+
+    
+    if(price !== undefined) {
+        console.log('price ----> ', price)
+        await handlePrice(req, res, price); 
+    }
+
+    if(category) {
+        console.log('category -----> ', category);
+        await handleCategory(req, res, category);
     }
 
 };

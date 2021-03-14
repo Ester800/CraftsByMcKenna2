@@ -9,7 +9,7 @@ const { Meta } = Card;
 
 const ProductCard = ({product}) => {
     // descructure
-    const { images, title, description, slug } = product;
+    const { images, title, description, slug, price } = product;
 
 return (
     <>
@@ -39,7 +39,8 @@ return (
         </>,
     ]}
     >
-      <Meta title={title} description={`${description && description.substring(0, 45)}...`} />  
+      <Meta title={`${title}` + ' - ' + ` $${price.toFixed(2)}`} 
+            description={`${description && description.substring(0, 45)}...`} />  
     </Card>
     </>
     );
