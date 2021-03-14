@@ -210,24 +210,54 @@ const handleCategory = async(req, res, category) => {
     }
 }
 
+const handleStar = (req, res, stars) => { 
+    Product.aggregate([
+        {
+            $project: {             // $project (aggregation) in order to acquire the average star rating...
+                document: '$$ROOT',  // gives us access to the entire document - with this we don't need to relist entire field
+                floorAverage: {
+                $floor: { $avg: '$ratings.star' }          // $ replaces Math.()
+                },
+            },
+        }, 
+        { $match: { floorAverage: stars } }    
+    ])
+    .limit(12)
+    .exec((err, aggregates) => {
+        if(err) console.log('AGGREGATE ERROR', err)
+        Product.find({ _id: aggregates })
+        .populate('category', '_id name')
+        .populate('subs', '_id name')
+        .populate('postedBy', '_id name')
+        .exec((err, products) => {
+            if(err) console.log('PRODUCT AGGREGATE ERROR', ERR);
+            res.json(products);
+        });
+    });                                      
+};       
+
 // SEARCH / filters
 exports.searchFilters = async (req, res) => {
-    const { query, price, category } = req.body;
+    const { query, price, category, stars } = req.body;
 
     if(query) {
-        console.log('query', query);
+        //console.log('query', query);
         await handleQuery(req, res, query);
     }
 
     
     if(price !== undefined) {
-        console.log('price ----> ', price)
+        //console.log('price ----> ', price)
         await handlePrice(req, res, price); 
     }
 
     if(category) {
-        console.log('category -----> ', category);
+        //console.log('category -----> ', category);
         await handleCategory(req, res, category);
     }
 
+    if(stars) {
+        //console.log('stars ----> ', stars);
+        await handleStar(req, res, stars);
+    }
 };
