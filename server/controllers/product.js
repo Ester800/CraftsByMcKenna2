@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 exports.create = async(req, res) => {
     try {
-        console.log(req.body);
+        //console.log(req.body);
         req.body.slug = slugify(req.body.title);
         const newProduct = await new Product(req.body).save();
         res.json(newProduct);
@@ -135,7 +135,7 @@ exports.productStar = async (req, res) => {
             }, 
             {new: true }  // without this, the above function will only send to database! we need this to send to our frontend as well!
         ).exec();
-        console.log("rating added", ratingAdded);
+        //console.log("rating added", ratingAdded);
         res.json(ratingAdded);
     } else {
         // if user has already left a rating, we update...
@@ -146,7 +146,7 @@ exports.productStar = async (req, res) => {
             {$set: {"ratings.$.star": star } }, 
             {new: true}  // without this, the above function will only send to database! we need this to send to our frontend as well!
         ).exec();
-        console.log('ratingUpdated', ratingUpdated);
+        //console.log('ratingUpdated', ratingUpdated);
         res.json(ratingUpdated);
     }
 };
@@ -178,12 +178,12 @@ const handleQuery = async (req, res, query) => {
 };
 
 const handlePrice = async (req, res, price) => {
-    try{
+    try {
         let products = await Product.find({
             price: {
                 $gte: price[0],   // $gte is GreaterThan from mongoose
                 $lte: price[1],   // $lte is LessThan from mongoose
-            }
+            },
         })
         .populate('category', '_id name')
         .populate('subs', '_id name')
@@ -196,7 +196,7 @@ const handlePrice = async (req, res, price) => {
     }   
 };
 
-const handleCategory = async(req, res, category) => {
+const handleCategory = async (req, res, category) => {
     try {
         let products = await Product.find({ category })
         .populate('category', '_id name')
@@ -208,7 +208,7 @@ const handleCategory = async(req, res, category) => {
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 const handleStar = (req, res, stars) => { 
     Product.aggregate([
@@ -216,7 +216,7 @@ const handleStar = (req, res, stars) => {
             $project: {             // $project (aggregation) in order to acquire the average star rating...
                 document: '$$ROOT',  // gives us access to the entire document - with this we don't need to relist entire field
                 floorAverage: {
-                $floor: { $avg: '$ratings.star' }          // $ replaces Math.()
+                $floor: { $avg: '$ratings.star' }          // $ replaces Math.() from mongoose
                 },
             },
         }, 
@@ -225,27 +225,36 @@ const handleStar = (req, res, stars) => {
     .limit(12)
     .exec((err, aggregates) => {
         if(err) console.log('AGGREGATE ERROR', err)
-        Product.find({ _id: aggregates })
-        .populate('category', '_id name')
-        .populate('subs', '_id name')
-        .populate('postedBy', '_id name')
-        .exec((err, products) => {
-            if(err) console.log('PRODUCT AGGREGATE ERROR', ERR);
-            res.json(products);
+            Product.find({ _id: aggregates })
+            .populate('category', '_id name')
+            .populate('subs', '_id name')
+            .populate('postedBy', '_id name')
+            .exec((err, products) => {
+                if(err) console.log('PRODUCT AGGREGATE ERROR', err);
+                res.json(products);
         });
     });                                      
 };       
 
+const handleSub = async (req, res, sub) => {
+    const products = await Product.find({ subs: sub })
+    .populate('category', '_id name')
+    .populate('subs', '_id name')
+    .populate('postedBy', '_id name')
+    .exec();
+
+    res.json(products);
+};
+
 // SEARCH / filters
 exports.searchFilters = async (req, res) => {
-    const { query, price, category, stars } = req.body;
+    const { query, price, category, stars, sub } = req.body;
 
     if(query) {
         //console.log('query', query);
         await handleQuery(req, res, query);
     }
 
-    
     if(price !== undefined) {
         //console.log('price ----> ', price)
         await handlePrice(req, res, price); 
@@ -259,5 +268,10 @@ exports.searchFilters = async (req, res) => {
     if(stars) {
         //console.log('stars ----> ', stars);
         await handleStar(req, res, stars);
+    }
+
+    if(sub) {
+        //console.log('sub ----> ', sub);
+        await handleSub(req, res, sub);
     }
 };
