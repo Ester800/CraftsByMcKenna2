@@ -47,7 +47,7 @@ const productSchema = new mongoose.Schema({
     },
     shipping: {
         type: String,
-        enum: ["Yes", "No"]
+        enum: ["Yes", "No"],
     }, 
     color: {
         type: String,
@@ -55,7 +55,7 @@ const productSchema = new mongoose.Schema({
     }, 
     brand: {
         type: String,
-        enum: ["Keychain", "Lips", "Star"]
+        enum: ["McKenna", "McKay", "Stephanie", "Karmen", "Becky"],
     }, 
     ratings: [
             {
