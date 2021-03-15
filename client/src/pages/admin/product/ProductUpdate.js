@@ -19,7 +19,7 @@ const initialState = {
     quantity: '',
     images: [],
     colors: ["Gold Flakes", "Colored dots", "Silver Flakes", "White", "Blue"],
-    brands: ["Keychain", "Lips", "Star"],
+    brands: ["McKenna", "McKay", "Stephanie", "Karmen", "Becky"],
     color: '',
     brand: '',
 }
