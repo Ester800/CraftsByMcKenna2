@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Menu } from 'antd';
+import { Menu, Badge } from 'antd';
 import { 
     UserOutlined, 
     HomeOutlined,
@@ -7,6 +7,7 @@ import {
     SettingOutlined,
     LogoutOutlined,
     ShoppingOutlined, 
+    ShoppingCartOutlined,
 } from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 import firebase from 'firebase';
@@ -20,7 +21,7 @@ const Header = () => {
     const [current, setCurrent] = useState('home');
 
     let dispatch = useDispatch();
-    let { user } = useSelector((state) => ({ ...state }));
+    let { user, cart } = useSelector((state) => ({ ...state }));
 
     let history = useHistory();
 
@@ -46,19 +47,28 @@ const Header = () => {
         </Item>
 
 
-        <Item key="home" icon={<ShoppingOutlined />}>
+        <Item key="shop" icon={<ShoppingOutlined />}>
           <Link to='/shop'>Shop</Link>
         </Item>
 
+        <Item key="cart" icon={<ShoppingCartOutlined />}>
+          <Link to='/cart'>
+            <Badge count={cart.length} offset={[9,0]}>
+              Cart
+              </Badge>
+          </Link>
+        </Item>
+
+
         {!user && (
           <Item key="register" icon={<UserAddOutlined />} className="float-right">
-          <Link to='/Register'>Register</Link>
+          <Link to='/register'>Register</Link>
         </Item>
         )}
 
         {!user && (
           <Item key="login" icon={<UserOutlined />} className="float-right">
-          <Link to='/Login'>Log In</Link>
+          <Link to='/login'>Log In</Link>
         </Item>
         )}
 
