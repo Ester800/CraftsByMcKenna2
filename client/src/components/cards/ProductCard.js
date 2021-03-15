@@ -1,13 +1,51 @@
-import React from 'react';
-import { Card } from 'antd';
+import React, {useState} from 'react';
+import { Card, Tooltip } from 'antd';
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
 import { Link } from 'react-router-dom';
 import { showAverage } from '../../functions/rating';
+import _ from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
 
 const { Meta } = Card;
 
 const ProductCard = ({product}) => {
+    const [tooltip, setTooltip] = useState('Click to add');
+
+    // redux
+    const { user, cart } = useSelector((state) => ({ ...state }));
+    const dispatch = useDispatch();
+
+    const handleAddToCart = () => {
+        
+        // create cart array
+        let cart = [];
+        if (typeof window !== 'undefined')  {   // this checks to see if we have the window object available 
+            // if cart is in local storage, GET it!
+            if (localStorage.getItem('cart')) {  // if we have items in the cart, get them...
+                cart = JSON.parse(localStorage.getItem('cart'))
+            }
+            // push new item into the cart array
+            cart.push({
+                ...product,   // spread out the properties, then add the count as a property
+                count: 1, 
+            });
+            // avoid duplicates in the cart!
+            let unique = _.uniqWith(cart, _.isEqual);  // lodash method that compares items in an array, if its unique then move forward
+            //console.log('unique', unique);
+            // save to local storage
+            localStorage.setItem('cart', JSON.stringify(unique));
+            // show tooltip
+            setTooltip('Added');
+
+            // add to redux state
+            dispatch({
+                type: 'ADD_TO_CART',
+                payload: unique,
+            });
+        }
+    };
+
     // descructure
     const { images, title, description, slug, price } = product;
 
@@ -34,9 +72,11 @@ return (
         <Link to={`/product/${slug}`}>
             <EyeOutlined className="text-warning" /> <br /> View Product
         </Link>, 
-        <>
-        <ShoppingCartOutlined className="text-danger" />Add to Cart
-        </>,
+        <Tooltip title={tooltip}>
+            <a onClick={handleAddToCart}>
+            <ShoppingCartOutlined className="text-danger" /> <br /> Add to Cart
+            </a>
+        </Tooltip>,
     ]}
     >
       <Meta title={`${title}` + ' - ' + ` $${price.toFixed(2)}`} 
