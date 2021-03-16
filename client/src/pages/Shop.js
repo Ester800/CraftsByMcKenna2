@@ -69,12 +69,9 @@ const Shop = () => {
     useEffect(() => {
         //console.log('load products based on user search input', text)
         const delayed = setTimeout(() => {
-            setPrice([0, 0]);
-            setCategoryIds([]);
-            setStar('');
-            setSub('');
-            setColor('');
-            setShipping('');
+            if(!text) {
+                loadAllProducts();
+            }
             fetchProducts({ query: text});
         }, 300);  // here we delay the req to give the user time to finalize their decision, thereby limiting the number of requests we send to the back end
         return () => clearTimeout(delayed);
@@ -409,7 +406,7 @@ const Shop = () => {
 
                         {/* shipping */}
                         <SubMenu 
-                            key='6' 
+                            key='7' 
                             title={
                                 <span className="h6">
                                     <DownSquareOutlined /> Shipping
