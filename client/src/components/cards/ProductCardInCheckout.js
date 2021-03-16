@@ -3,6 +3,7 @@ import ModalImage from 'react-modal-image';
 import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { CheckCircleOutlined, CloseCircleOutlined, CloseOutlined} from '@ant-design/icons';
 
 const ProductCardInCheckout = ({ p }) => {
 
@@ -64,6 +65,31 @@ const ProductCardInCheckout = ({ p }) => {
         }
     };
 
+    const handleRemove = () => {  // the following code removes an item from the cart
+        //console.log(p._id, "to remove");
+        let cart = [];
+
+        if(typeof window !== 'undefined') {
+            if(localStorage.getItem('cart')) {
+                cart = JSON.parse(localStorage.getItem('cart'));
+            }
+            
+            cart.map((product, index) => {
+                if(product._id === p._id) {
+                    cart.splice(index, 1);
+                }
+            });
+
+            console.log('quantity updated');
+            localStorage.setItem('cart', JSON.stringify(cart));
+            dispatch({
+                type: 'ADD_TO_CART',
+                payload: cart,
+            });
+        }
+
+    };
+
     return (
         <tbody>
             <tr>
@@ -102,12 +128,29 @@ const ProductCardInCheckout = ({ p }) => {
                         
                     </select>
                 </td>
-                <td className="text-center">
-                    <input type='number' className="form-control" value={p.count} onChange={handleQuantityChange}/>
 
+                <td className="text-center">
+                    <input 
+                        type='number' 
+                        className="form-control" 
+                        value={p.count} 
+                        onChange={handleQuantityChange}
+                    />
                 </td>
-                <td>Shipping Icon</td>
-                <td>Delete Icon</td>
+
+                <td className="text-center">
+                    {p.shipping === "Yes" ? (
+                        <CheckCircleOutlined className="text-success" />
+                    ) : (
+                        <CloseCircleOutlined className="text-danger"/>
+                    )}
+                </td>
+                <td className="text-center">
+                    <CloseOutlined 
+                        onClick={handleRemove} 
+                        className="text-danger pointer"
+                    />
+                </td>
             </tr>
         </tbody>
     )

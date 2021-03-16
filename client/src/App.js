@@ -12,6 +12,7 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import History from './pages/user/History';
 import UserRoute from './components/routes/UserRoute';
 import AdminRoute from './components/routes/AdminRoute';
+import SideDrawer from './components/drawer/SideDrawer';
 import Password from './pages/user/Password';
 import Wishlist from './pages/user/Wishlist';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -31,7 +32,6 @@ import Cart from './pages/Cart';
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import { currentUser } from './functions/auth';
-
 
 
 const App = () => {
@@ -67,6 +67,7 @@ useEffect(() => {
   return (
     <>
     <Header />
+    <SideDrawer />
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Home} />
