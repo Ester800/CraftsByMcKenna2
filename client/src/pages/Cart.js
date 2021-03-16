@@ -23,7 +23,7 @@ const Cart = ({ history }) => {
             .then((res) => {
                 console.log('CART POST RES', res)
                 if(res.data.ok) history.push('/checkout');
-            }).catch(err => console.log('cart save err', err));
+            }).catch(err => console.log('cart save err-', err));
     };
 
     const showCartItems = () => (
