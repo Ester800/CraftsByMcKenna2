@@ -29,6 +29,7 @@ import SubHome from './pages/sub/SubHome';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import CreateCouponPage from './pages/admin/coupon/CreateCouponPage'
 
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
@@ -93,6 +94,7 @@ useEffect(() => {
         <Route exact path="/shop" component={Shop} />
         <Route exact path='/cart' component={Cart} />
         <UserRoute exact path="/checkout" component={Checkout} />
+        <AdminRoute exact path="/admin/coupon" component={CreateCouponPage} />
       </Switch>
     </>
   );
