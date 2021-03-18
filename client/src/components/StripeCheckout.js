@@ -3,6 +3,9 @@ import { CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPaymentIntent } from '../functions/stripe';
 import { Link } from 'react-router-dom';
+import { Card } from 'antd';
+import { DollarOutlined, CheckOutlined} from '@ant-design/icons';
+import CraftsByMcKenna from '../images/craftsbymckennalogo.jpg';
 
 const StripeCheckout = ({ history }) => {
     const dispatch = useDispatch();
@@ -12,7 +15,11 @@ const StripeCheckout = ({ history }) => {
     const [error, setError] = useState(null);
     const [processing, setProcessing] = useState('');
     const [disabled, setDisabled] = useState(true);
-    const[clientSecret, setClientSecret] = useState('');
+    const [clientSecret, setClientSecret] = useState('');
+
+    const [cartTotal, setCartTotal] = useState(0);
+    const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
+    const [payable, setPayable] = useState(0);
 
     const stripe = useStripe();
     const elements = useElements();
@@ -22,6 +29,10 @@ const StripeCheckout = ({ history }) => {
         .then((res) => {
             console.log('create payment intent', res.data);
             setClientSecret(res.data.clientSecret);
+            // additional repsponse recieved on successful payment
+            setCartTotal(res.data.cartTotal);
+            setTotalAfterDiscount(res.data.totalAfterDiscount);
+            setPayable(res.data.payable);
         });
     }, []);
 
@@ -60,7 +71,6 @@ const StripeCheckout = ({ history }) => {
         setError(e.error ? e.error.message : '') // show error message
     };
 
-
     const cardStyle = {
         style: {
         base: {
@@ -79,20 +89,49 @@ const StripeCheckout = ({ history }) => {
         },
     };
 
-
     return (
         <>
-        <p className={succeeded ? 'result-message' : 'result-message hidden'}>
-            Payment Successful!{' '} 
-            <Link to='/user/history'>See it in your purchase history.</Link>
-        </p>
+        {
+            !succeeded && <div>
+                {coupon && totalAfterDiscount !== undefined ? (
+                    <p className='alert alert-success'>{`Total after discount: $${totalAfterDiscount}`}</p>
+                ) : (
+                    <p className='alert alert-danger'>Thank you for your order! Please fill out payment information below</p>
+                    )}
+            </div>
+        }
 
-
+        <div className="text-center pb-5">
+            <Card
+            cover={
+                <img 
+                    alt='' 
+                    src={CraftsByMcKenna} 
+                    style={{
+                        height: "100px",
+                        objectFit: "cover",
+                        marginBottom: "-50px",
+                    }}>
+            
+                </img>
+            }
+            actions={[
+                <>
+                <DollarOutlined className='text-info' /> <br /> Total: ${(cartTotal).toFixed(2)}
+                </>,
+                <>
+                <CheckOutlined className='text-info' /> <br /> Total Payable: ${(payable / 100).toFixed(2)}
+                </>,
+                ]}
+                >
+                
+            </Card>
+        </div>
             <form 
-            id='payment-form' 
-            className='stripe-form' 
-            onSubmit={handleSubmit}
-        >
+                id='payment-form' 
+                className='stripe-form' 
+                onSubmit={handleSubmit}
+            >
             <CardElement 
                 id='card-element' 
                 options={cardStyle} 
@@ -117,6 +156,12 @@ const StripeCheckout = ({ history }) => {
                     {error}
                 </div>
             )}
+
+            <br />
+            <p className={succeeded ? 'result-message' : 'result-message hidden'}>
+            Payment Successful!{' '} 
+            <Link to='/user/history'>See it in your purchase history.</Link>
+            </p>
             </form>
         </>
     )

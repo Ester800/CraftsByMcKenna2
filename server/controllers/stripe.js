@@ -20,9 +20,9 @@ exports.createPaymentIntent = async (req, res) => {
     let finalAmount = 0;
 
     if (couponApplied && totalAfterDiscount) {
-        finalAmount = Math.round(totalAfterDiscount * 100)
+        finalAmount = (totalAfterDiscount * 100)
     } else {
-        finalAmount = Math.round(cartTotal * 100);
+        finalAmount = (cartTotal * 100);
     }
 
     
