@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Product = require('../models/product');
 const Cart = require('../models/cart');
 const Coupon = require('../models/coupon');
+const Order = require('../models/order');
 
 exports.userCart = async (req, res) => {
     //console.log(req.body);
@@ -120,6 +121,38 @@ exports.applyCouponToUserCart = async (req, res) => {
     res.json(totalAfterDiscount);
 };
 
+exports.createOrder = async (req, res) => {
+    const paymentIntent = req.body.stripeResponse;
+    //console.log(req.body);
+    const user = await User.findOne({ email: req.user.email }).exec();
 
+    let { products } = await Cart.findOne({ orderedBy: user._id }).exec();
+
+    // create new order
+    let newOrder = await new Order({
+        products,
+        paymentIntent,
+        orderedBy: user._id,
+    }).save();
+
+    // decrement quantity, increment sort
+    let bulkOption = products.map((item) => {    // bulkOption will handle all our items at the same item :)
+        return {
+            updateOne: {
+                filter: {_id: item.product._id}, // IMPORTANT item.product
+                update: {$inc: { quantity: -item.count, sold: +item.count }}
+            
+            },
+        };
+    });
+
+    let updated = await Product.bulkWrite(bulkOption, {});
+    console.log('PRODUCT QUANTITY DECREMENTED AND SOLD++', updated);
+
+    console.log('NEW ORDER SAVED', newOrder);
+    
+    res.json({ ok: true });
+
+};
 
 
