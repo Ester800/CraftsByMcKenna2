@@ -21,7 +21,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
     const [tooltip, setTooltip] = useState('Click to add');
 
     // redux
-    const { user, cart } = useSelector((state) => ({ ...state }));
+    const { user } = useSelector((state) => ({ ...state }));
     const dispatch = useDispatch();
 
     //router
@@ -114,9 +114,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                             </div>
                         </Tooltip>,
 
-                        <a onClick={handleAddToWishlist}>
+                        <div onClick={handleAddToWishlist}>
                             <HeartOutlined className="text-info" /> <br /> Add to Wishlist
-                        </a>,
+                        </div>,
 
                         <RatingModal>
                             <StarRating 
