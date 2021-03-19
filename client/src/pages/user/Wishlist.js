@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UserNav from '../../components/nav/UserNav';
 import { getWishlist, removeWishlist } from '../../functions/user';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
@@ -13,7 +13,7 @@ const Wishlist= () => {
     useEffect(() => {
         loadWishlist();
 
-    }, []);
+    });
 
     const loadWishlist = () => 
         getWishlist(user.token).then((res) => {
