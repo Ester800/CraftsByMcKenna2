@@ -318,7 +318,7 @@ const Shop = () => {
                         <SubMenu 
                             key='1' 
                             title={
-                                <span classname="h6">
+                                <span className="h6">
                                     <DollarOutlined /> Price
                                 </span>
                             }
