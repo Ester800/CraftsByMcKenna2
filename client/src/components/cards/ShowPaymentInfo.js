@@ -3,7 +3,7 @@ import React from 'react';
 
 
 
-const ShowPaymentInfo = ({ order }) => (
+const ShowPaymentInfo = ({ order, showStatus = true }) => (
     <div className='pb-2'>
             <div>
                 Order Id: <b>{order.paymentIntent.paymentIntent.id}</b>
@@ -25,11 +25,11 @@ const ShowPaymentInfo = ({ order }) => (
                 Ordered On: <b>{new Date(order.paymentIntent.paymentIntent.created * 1000).toLocaleString()}</b>
             </div>
 
+            {showStatus && (
             <span className='badge bg-primary text-white'>
                 Order Status: {order.orderStatus}
             </span>
-        
-
+            )}
     </div>
 
 )
