@@ -69,9 +69,6 @@ const Checkout = lazy(() => import ('./pages/Checkout'));
 const CreateCouponPage = lazy(() => import ('./pages/admin/coupon/CreateCouponPage'));
 const Payment = lazy(() => import ('./pages/Payment'));
 
-
-
-
 const App = () => {
 const dispatch = useDispatch();
 
