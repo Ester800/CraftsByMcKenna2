@@ -16,6 +16,8 @@ const Cart = ({ history }) => {
         }, 0);
     };
 
+
+    
     const saveOrderToDb = () => {
         //alert('save order to db');
         //console.log('cart', JSON.stringify(cart, null, 4));
