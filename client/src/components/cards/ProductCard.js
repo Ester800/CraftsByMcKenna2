@@ -13,7 +13,7 @@ const ProductCard = ({product}) => {
     const [tooltip, setTooltip] = useState('Click to add');
 
     // redux
-    const { user, cart } = useSelector((state) => ({ ...state }));
+    //const { user, cart } = useSelector((state) => ({ ...state }));
     const dispatch = useDispatch();
 
     const handleAddToCart = () => {
