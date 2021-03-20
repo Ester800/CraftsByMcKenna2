@@ -2,7 +2,7 @@ import React from 'react';
 import { Drawer, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
+import craftsbymckennalogo from '../images/craftsbymckennalogo.jpg';
 
 const SideDrawer = () => {
     const dispatch = useDispatch();
