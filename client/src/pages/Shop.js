@@ -18,10 +18,10 @@ const Shop = () => {
     const [ok, setOk] = useState(false);
     const [categories, setCategories] = useState([]);
     const [categoryIds, setCategoryIds] = useState([]);   // for use in side bar!
-    const [star, setStar] = useState('');
+    const [setStar] = useState('');
     const [subs, setSubs] = useState([]);
-    const [sub, setSub] = useState('');
-    const [brands, setBrands] = useState([
+    const [setSub] = useState('');
+    const [brands] = useState([
         "McKenna", 
         "McKay", 
         "Stephanie", 
@@ -29,7 +29,7 @@ const Shop = () => {
         "Becky"
     ]);
     const [brand, setBrand] = useState('');
-    const [colors, setColors] = useState([
+    const [colors] = useState([
         "Gold Flakes", 
         "Colored dots", 
         "Silver Flakes", 
