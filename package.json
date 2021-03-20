@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "15.10.0"
+  },
   "scripts": {
     "start": "cd server && node server.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
