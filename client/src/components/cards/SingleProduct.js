@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import stockPhoto from '../../images/craftsbymckennalogo.jpg';
+//import stockPhoto from '../../images/craftsbymckennalogo.jpg';
 import ProductListItems from './ProductListItems';
 import StarRating from 'react-star-ratings';
 import RatingModal from '../modal/RatingModal';
@@ -81,7 +81,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                     {images && images.map((i) => <img alt='' src={i.url} key={i.public_id} />)}
                 </Carousel>
                 ) : (
-                    <Card cover={<img alt='' src={stockPhoto} className="mb-3 card-image " />}></Card>
+                    <Card>'No image available'</Card>
                 )}   
 
                 <Tabs type='card'>

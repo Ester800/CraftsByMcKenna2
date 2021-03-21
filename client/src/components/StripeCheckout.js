@@ -5,7 +5,7 @@ import { createPaymentIntent } from '../functions/stripe';
 import { Link } from 'react-router-dom';
 import { Card } from 'antd';
 import { DollarOutlined, CheckOutlined} from '@ant-design/icons';
-import CraftsByMcKenna from '../images/craftsbymckennalogo.jpg';
+//import CraftsByMcKenna from '../images/craftsbymckennalogo.jpg';
 import { createOrder, emptyUserCart } from '../functions/user';
 
 const StripeCheckout = ({ history }) => {
@@ -122,18 +122,7 @@ const StripeCheckout = ({ history }) => {
 
         <div className="text-center pb-5">
             <Card
-            cover={
-                <img 
-                    alt='' 
-                    src={CraftsByMcKenna} 
-                    style={{
-                        height: "100px",
-                        objectFit: "cover",
-                        marginBottom: "-50px",
-                    }}>
             
-                </img>
-            }
             actions={[
                 <>
                 <DollarOutlined className='text-info' /> <br /> Total: ${(cartTotal).toFixed(2)}

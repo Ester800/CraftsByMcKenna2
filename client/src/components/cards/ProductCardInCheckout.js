@@ -1,6 +1,6 @@
 import React from 'react';
 import ModalImage from 'react-modal-image';
-import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
+//import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { CheckCircleOutlined, CloseCircleOutlined, CloseOutlined} from '@ant-design/icons';
@@ -98,7 +98,7 @@ const ProductCardInCheckout = ({ p }) => {
                         {p.images.length ? (
                             <ModalImage small={p.images[0].url} large={p.images[0].url} />
                         ) : (
-                            <ModalImage small={craftsbymckennalogo} large={craftsbymckennalogo} />
+                            <ModalImage small={'no image'} large={'no image'} />
                         )}
                     </div>
                 </td>
