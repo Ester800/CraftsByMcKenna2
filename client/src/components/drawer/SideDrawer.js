@@ -1,8 +1,8 @@
 import React from 'react';
-import { Drawer, Button } from 'antd';
+import { Drawer } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
+//import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
 
 const SideDrawer = () => {
     const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const SideDrawer = () => {
                             </>
                         ) : (
                             <>
-                                <div src={craftsbymckennalogo} style={imageStyle} >
+                                <div src={p.images[0].url} style={imageStyle} >
                                     <p className='text-center bg-secondary text-light'>
                                     {p.title} x {p.count}
                                     </p>
