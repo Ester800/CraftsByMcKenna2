@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
-import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
+//import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
 import  { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ const AdminProductCard = ({ product, handleRemove }) => {
             cover={
             <img 
                 alt='' 
-                src={images && images.length ? images[0].url : craftsbymckennalogo } 
+                src={images && images.length ? images[0].url : 'no image available' } 
                 style={{ height: '150px', objectFit: 'cover' }}
                 className='p-1' 
             />

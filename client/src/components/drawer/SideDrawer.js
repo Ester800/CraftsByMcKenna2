@@ -40,7 +40,7 @@ const SideDrawer = () => {
                             </>
                         ) : (
                             <>
-                                <div src={p.images[0].url} style={imageStyle} >
+                                <div>
                                     <p className='text-center bg-secondary text-light'>
                                     {p.title} x {p.count}
                                     </p>

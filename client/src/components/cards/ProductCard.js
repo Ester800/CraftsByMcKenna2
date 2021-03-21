@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Card, Tooltip } from 'antd';
 import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
+//import craftsbymckennalogo from '../../images/craftsbymckennalogo.jpg';
 import { Link } from 'react-router-dom';
 import { showAverage } from '../../functions/rating';
 import _ from 'lodash';
@@ -67,7 +67,7 @@ return (
     cover={
         <img 
             alt='' 
-            src={images && images.length ? images[0].url : craftsbymckennalogo } 
+            src={images && images.length ? images[0].url : 'no photo available' } 
             style={{ height: '150px', objectFit: 'cover' }}
             className='p-1' 
         />
@@ -78,10 +78,10 @@ return (
             <EyeOutlined className="text-warning" /> <br /> View Product
         </Link>, 
         <Tooltip title={tooltip}>
-            <a onClick={handleAddToCart} disabled={product.quantity < 1 }>
+            <div onClick={handleAddToCart} disabled={product.quantity < 1 }>
             <ShoppingCartOutlined className="text-danger" /> <br />
                 {product.quantity < 1 ? "Out of Stock": "Add to Cart"}
-            </a>
+            </div>
         </Tooltip>,
     ]}
     >
