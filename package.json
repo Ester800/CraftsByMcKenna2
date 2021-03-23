@@ -1,0 +1,19 @@
+{
+  "name": "mckenna",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ester800/CraftsByMcKenna2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ester800/CraftsByMcKenna2/issues"
+  },
+  "homepage": "https://github.com/Ester800/CraftsByMcKenna2#readme"
+}
