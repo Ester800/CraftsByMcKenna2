@@ -16,8 +16,7 @@
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Ester800/CraftsByMcKenna2/issues"
-  },
-  "homepage": "https://github.com/Ester800/CraftsByMcKenna2#readme"
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
