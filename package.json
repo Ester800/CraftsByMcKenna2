@@ -16,14 +16,10 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1",
-    "mongoose": "^5.12.2",
-    "morgan": "^1.10.0",
-    "node": "^15.10.0",
-    "slugify": "^1.5.0",
-    "stripe": "^8.139.0"
-  }
+  "bugs": {
+    "url": "https://github.com/Ester800/CraftsByMcKenna2/issues"
+  },
+  "homepage": "https://github.com/Ester800/CraftsByMcKenna2#readme"
 }
 
 
