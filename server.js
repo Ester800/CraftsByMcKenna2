@@ -28,10 +28,16 @@ app.use(cors());
 // app.use('/api', authRoutes); --> quieted after refactoring code below!
 readdirSync('./routes').map((r) => app.use("/api", require('./routes/' + r)));  // automates the routing process
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "client/build")));
+
 // port
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
+
+
+
 
 
 
